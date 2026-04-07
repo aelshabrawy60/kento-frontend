@@ -26,7 +26,7 @@ function App() {
           <Route path='/client/login' element={<ClientLoginPage />} />
           <Route path='/client/register' element={<ClientRegisterPage />} />
           <Route path='/client/onboard' element={<ClientOnboardPage />} />
-          <Route path='/client' element={<ClientLayout />}>
+          <Route path='/' element={<ClientLayout />}>
             <Route path='' element={<ClientHomePage />} />
             <Route path='vendors/:id' element={<VendorProfile />} />
           </Route>
