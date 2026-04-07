@@ -3,7 +3,7 @@ import ReviewCard from './ReviewCard'
 
 function ReviewsViewer({ reviews }) {
     return (
-        <div className='flex flex-wrap gap-4 justify-center'>
+        <div className='flex flex-wrap gap-4'>
             {reviews.map((review, i) => (
                 <ReviewCard key={i} data={review} />
             ))}
