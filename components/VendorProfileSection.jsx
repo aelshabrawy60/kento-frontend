@@ -1,7 +1,9 @@
 import React from 'react'
 import ButtonComponent from './UI/ButtonComponent'
+import { useNavigate } from 'react-router-dom'
 
-function VendorProfileSection({data: {user: {name, profilePicture, region}, rating, category, price, about}}) {
+function VendorProfileSection({ data: { user: { name, profilePicture, region, id }, rating, category, price, about } }) {
+  const navigate = useNavigate()
   return (
     <div className="w-full
                     flex gap-4 lg:gap-7 lg:p-8 lg:rounded-3xl">
@@ -39,10 +41,10 @@ function VendorProfileSection({data: {user: {name, profilePicture, region}, rati
           <div className="flex items-center gap-1.5 text-sm text-gray-500">
             {/* Hamburger / category icon */}
             <svg className="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" strokeWidth="2">
-              <line x1="3" y1="6" x2="21" y2="6"/>
-              <line x1="3" y1="12" x2="21" y2="12"/>
-              <line x1="3" y1="18" x2="21" y2="18"/>
+              stroke="currentColor" strokeWidth="2">
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <line x1="3" y1="12" x2="21" y2="12" />
+              <line x1="3" y1="18" x2="21" y2="18" />
             </svg>
             <span>{category} -</span>
             <span className="text-teal-500 font-semibold">From {price}</span>
@@ -51,9 +53,9 @@ function VendorProfileSection({data: {user: {name, profilePicture, region}, rati
           <div className="flex items-center gap-1.5 text-sm text-gray-500">
             {/* Pin icon */}
             <svg className="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" strokeWidth="2">
-              <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/>
-              <circle cx="12" cy="10" r="3"/>
+              stroke="currentColor" strokeWidth="2">
+              <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z" />
+              <circle cx="12" cy="10" r="3" />
             </svg>
             <span>{region}</span>
           </div>
@@ -70,7 +72,7 @@ function VendorProfileSection({data: {user: {name, profilePicture, region}, rati
         {/* Actions */}
         <div className="flex gap-3 lg:mt-1">
           <div className='flex-1 lg:flex-none'>
-            <ButtonComponent label={"Contact"}/>
+            <ButtonComponent label={"Contact"} onClick={() => navigate(`/chats/${id}`)} />
           </div>
           <button
             className="flex-1 lg:flex-none lg:px-7 border-2 border-gray-200

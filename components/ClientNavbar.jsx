@@ -5,19 +5,19 @@ import { IoChatbubblesSharp } from "react-icons/io5";
 import { IoPerson } from "react-icons/io5";
 
 const routes = [
-  { label: "home",    path: "/client",        icon: <RiHome5Fill /> },
-  { label: "saved",   path: "/client/saved",   icon: <FaHeart /> },
-  { label: "chat",    path: "/client/chat",    icon: <IoChatbubblesSharp /> },
-  { label: "profile", path: "/client/profile", icon: <IoPerson /> },
+  { label: "home", path: "/", icon: <RiHome5Fill /> },
+  { label: "saved", path: "/saved", icon: <FaHeart /> },
+  { label: "chat", path: "/chats", icon: <IoChatbubblesSharp /> },
+  { label: "profile", path: "/profile", icon: <IoPerson /> },
 ];
 
 function ClientNavbar() {
   const { pathname } = useLocation();
 
   const isActive = (path) => {
-  if (path === "/client") {
-    return pathname === "/client"; // exact match only
-  }
+    if (path === "/") {
+      return pathname === "/"; // exact match only
+    }
     return pathname.startsWith(path);
   };
 
@@ -25,7 +25,7 @@ function ClientNavbar() {
     <>
       {/* ── Desktop Navbar ── */}
       <div className="w-full justify-center hidden md:flex mb-6">
-        <div className="p-6 bg-[#FBFCFF] shadow-md rounded-md flex items-center justify-between w-full">
+        <div className="p-2 rounded-md flex items-center justify-between w-full">
           {/* Logo */}
           <NavLink to="/" className="text-xl font-bold text-primary">
             KENTO
@@ -74,7 +74,7 @@ function ClientNavbar() {
       </div>
 
       {/* ── Mobile Bottom Navigation ── */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 p-4">
+      <div className="md:hidden fixed bottom-0 left-0 right-0 p-4 z-48">
         <div className="bg-[#ECECEC]/90 backdrop-blur-sm rounded-[50px] shadow-md p-3">
           <div className="flex justify-around gap-4">
             {routes.map((route) => {

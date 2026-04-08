@@ -15,13 +15,13 @@ function VendorGallery({ data }) {
           <div key={index} className='break-inside-avoid'>
             {isVideo(mediaUrl) ? (
               <video
-                className='w-full rounded-md'
+                className='w-full rounded-lg'
                 src={mediaUrl}
                 controls
               />
             ) : (
               <img
-                className='w-full rounded-md'
+                className='w-full rounded-lg'
                 src={mediaUrl}
                 alt="portfolio"
               />

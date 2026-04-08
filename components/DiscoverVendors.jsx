@@ -3,7 +3,7 @@ import VendorCard from './VendorCard'
 import DiscoverVendorsFilter from './DiscoverVendorsFilter';
 
 
-function DiscoverVendors() { 
+function DiscoverVendors() {
 
   const [vendors, setVendors] = React.useState([])
   const [selectedRegion, setSelectedRegion] = React.useState("All");
@@ -32,17 +32,15 @@ function DiscoverVendors() {
 
   return (
     <div>
-        <div className='flex justify-between mb-4'>
-            <h2 className='text-2xl font-bold'>Discover</h2>
-            <DiscoverVendorsFilter selectedRegion={selectedRegion} setSelectedRegion={setSelectedRegion} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory}/>
-        </div>
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6'>
-            {vendors.map(vendor => (
-                <div key={vendor.id} className=''>
-                    <VendorCard data={vendor}/>
-                </div>
-            ))}
-        </div>
+      <div className='flex justify-between mb-4'>
+        <h2 className='text-2xl font-bold'>Discover</h2>
+        <DiscoverVendorsFilter selectedRegion={selectedRegion} setSelectedRegion={setSelectedRegion} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
+      </div>
+      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6'>
+        {vendors.map(vendor => (
+          <VendorCard key={vendor.id} data={vendor} />
+        ))}
+      </div>
     </div>
   )
 }

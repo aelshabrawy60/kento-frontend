@@ -3,7 +3,7 @@ import ButtonComponent from './UI/ButtonComponent'
 import axios from "axios";
 import { useState } from 'react'
 
-function UserLogin({type = "clients"}) {
+function UserLogin({ type = "clients" }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
@@ -21,6 +21,9 @@ function UserLogin({type = "clients"}) {
 
       console.log('Success:', response.data)
       localStorage.setItem('accessToken', response.data.accessToken)
+      localStorage.setItem('userId', response.data.user.id)
+      localStorage.setItem('userName', response.data.user.name)
+      localStorage.setItem('streamChatToken', response.data.streamChatToken)
 
       // store the refresh token in the cookies
       document.cookie = `refreshToken=${response.data.refreshToken}; path=/; secure; samesite=strict`
@@ -32,7 +35,7 @@ function UserLogin({type = "clients"}) {
       const problem = err.response?.data
 
       const message =
-      problem.message || 'Something went wrong. Please try again.'
+        problem.message || 'Something went wrong. Please try again.'
 
       setError(message)
     } finally {
@@ -58,14 +61,14 @@ function UserLogin({type = "clients"}) {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          
+
         </div>
-        
+
         {error && (
-            <p className="text-red-500 text-sm mt-1 mb-2">{error}</p>
-          )}
+          <p className="text-red-500 text-sm mt-1 mb-2">{error}</p>
+        )}
         {!error && (
-           <div className='mt-6'></div>
+          <div className='mt-6'></div>
         )}
 
         <ButtonComponent

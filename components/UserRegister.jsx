@@ -3,7 +3,7 @@ import ButtonComponent from './UI/ButtonComponent'
 import axios from "axios";
 import { useState } from 'react'
 
-function UserRegister({type = "clients"}) {
+function UserRegister({ type = "clients" }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
@@ -23,6 +23,9 @@ function UserRegister({type = "clients"}) {
 
       console.log('Success:', response.data)
       localStorage.setItem('accessToken', response.data.accessToken)
+      localStorage.setItem('userId', response.data.user.id)
+      localStorage.setItem('userName', response.data.user.name)
+      localStorage.setItem('streamChatToken', response.data.streamChatToken)
 
       document.cookie = `refreshToken=${response.data.refreshToken}; path=/; secure; samesite=strict`
 
@@ -63,7 +66,7 @@ function UserRegister({type = "clients"}) {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          
+
         </div>
 
         {/* Display validation errors if any */}
@@ -74,12 +77,12 @@ function UserRegister({type = "clients"}) {
             ))}
           </ul>
         )}
-        
+
         {error && (
-            <p className="text-red-500 text-sm mt-1 mb-2">{error}</p>
-          )}
+          <p className="text-red-500 text-sm mt-1 mb-2">{error}</p>
+        )}
         {!error && !errors.length && (
-           <div className='mt-6'></div>
+          <div className='mt-6'></div>
         )}
 
         <ButtonComponent
