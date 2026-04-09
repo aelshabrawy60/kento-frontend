@@ -4,6 +4,7 @@ import axios from 'axios'
 import VendorGallery from '../../components/VendorGallery';
 import ReviewsViewer from '../../components/ReviewsViewer';
 import RadioButtonsGroup from '../../components/UI/RadioButtonsGroup';
+import VendorProfileLoading from '../../components/Loading/VendorProfileLoading';
 
 function VendorProfile() {
   const [vendorData, setVendorData] = React.useState({});
@@ -32,7 +33,7 @@ function VendorProfile() {
   return (
     <div>
       {loading ? (
-        <div>Loading...</div>
+        <VendorProfileLoading />
       ) : (
         <>
           <VendorProfileSection data={vendorData} />

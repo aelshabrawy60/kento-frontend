@@ -14,10 +14,10 @@ function RadioButtonsGroup({ options, selected, onChange, label }) {
                         <label
                             key={option.value}
                             onClick={() => onChange(option.value)}
-                            className={`flex-1 flex flex-col items-center gap-0.5 px-4 py-2 md:py-3 rounded-md border cursor-pointer transition-all duration-150 text-center
+                            className={`flex-1 flex flex-col items-center gap-0.5 px-4 py-2 md:py-3 cursor-pointer text-center
                 ${isSelected
-                                    ? 'border-primary bg-primary/10'
-                                    : 'border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50'
+                                    ? 'border-primary border-b-2'
+                                    : 'bg-white'
                                 }`}
                         >
                             <input

@@ -1,12 +1,14 @@
 import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom'
-import ClientLoginPage from '../pages/Client/ClientLoginPage'
+import ClientLoginPage from './pages/Client/ClientLoginPage'
 import './App.css'
-import ClientRegisterPage from '../pages/Client/ClientRegisterPage'
-import ClientOnboardPage from '../pages/Client/ClientOnboardPage'
-import ClientHomePage from '../pages/Client/ClientHomePage'
-import ClientNavbar from '../components/ClientNavbar'
-import VendorProfile from '../pages/Client/VendorProfile'
-import ClientChatsPage from '../pages/Client/ClientChatsPage';
+import ClientRegisterPage from './pages/Client/ClientRegisterPage'
+import ClientOnboardPage from './pages/Client/ClientOnboardPage'
+import ClientHomePage from './pages/Client/ClientHomePage'
+import ClientNavbar from './components/ClientNavbar'
+import VendorProfile from './pages/Client/VendorProfile'
+import ClientChatsPage from './pages/Client/ClientChatsPage';
+import ClientProfilePage from './pages/Client/ClientProfilePage'
+import ClientSavesPage from './pages/Client/ClientSavesPage'
 
 function ClientLayout() {
   return (
@@ -26,6 +28,8 @@ function ChatLayout() {
   )
 }
 
+
+
 function App() {
 
 
@@ -42,6 +46,8 @@ function App() {
           <Route path='/' element={<ClientLayout />}>
             <Route path='' element={<ClientHomePage />} />
             <Route path='vendors/:id' element={<VendorProfile />} />
+            <Route path='profile' element={<ClientProfilePage />} />
+            <Route path='saved' element={<ClientSavesPage />} />
           </Route>
         </Routes>
       </BrowserRouter >

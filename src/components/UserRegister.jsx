@@ -23,8 +23,7 @@ function UserRegister({ type = "clients" }) {
 
       console.log('Success:', response.data)
       localStorage.setItem('accessToken', response.data.accessToken)
-      localStorage.setItem('userId', response.data.user.id)
-      localStorage.setItem('userName', response.data.user.name)
+      localStorage.setItem('user', JSON.stringify(response.data.user))
       localStorage.setItem('streamChatToken', response.data.streamChatToken)
 
       document.cookie = `refreshToken=${response.data.refreshToken}; path=/; secure; samesite=strict`

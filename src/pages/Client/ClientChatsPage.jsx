@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Navigate } from 'react-router-dom';
 import { Chat, useCreateChatClient, Channel, ChannelHeader, MessageList, MessageInput, Thread, Window, ChannelList, useChatContext } from 'stream-chat-react';
+import useAuth from '../../hooks/useAuth';
 
 const apiKey = import.meta.env.VITE_STREAM_API_KEY;
 const userId = localStorage.getItem('userId');
@@ -97,6 +98,8 @@ const ChatLayout = ({ filters, sort, options, id }) => {
 
 function ClientChatsPage() {
     const { id } = useParams();
+    const { isAuthenticated } = useAuth();
+
     const client = useCreateChatClient({
         apiKey,
         tokenOrProvider: token,
@@ -104,6 +107,8 @@ function ClientChatsPage() {
     });
 
     if (!client) return <div className="flex items-center justify-center h-screen">Setting up client & connection...</div>;
+
+    if (!isAuthenticated) return <Navigate to="/client/login" />;
 
     return (
         <div className='flex w-full'>

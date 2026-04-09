@@ -21,15 +21,14 @@ function UserLogin({ type = "clients" }) {
 
       console.log('Success:', response.data)
       localStorage.setItem('accessToken', response.data.accessToken)
-      localStorage.setItem('userId', response.data.user.id)
-      localStorage.setItem('userName', response.data.user.name)
+      localStorage.setItem('user', JSON.stringify(response.data.user))
       localStorage.setItem('streamChatToken', response.data.streamChatToken)
 
       // store the refresh token in the cookies
       document.cookie = `refreshToken=${response.data.refreshToken}; path=/; secure; samesite=strict`
 
       // Redirect to Home page after successful login
-      window.location.href = '/client'
+      window.location.href = '/'
 
     } catch (err) {
       const problem = err.response?.data

@@ -6,6 +6,14 @@ function VendorGallery({ data }) {
     return /\.(mp4|webm|ogg|vtt)$/i.test(url)
   }
 
+  if (!data.portfolioPosts || data.portfolioPosts.length === 0) {
+    return (
+      <div className='flex justify-center items-center h-64'>
+        <p className='text-gray-500'>No portfolio posts found</p>
+      </div>
+    )
+  }
+
   return (
     <div className='columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-3 space-y-4'>
       {data.portfolioPosts.map((item, index) => {
@@ -18,6 +26,9 @@ function VendorGallery({ data }) {
                 className='w-full rounded-lg'
                 src={mediaUrl}
                 controls
+                autoPlay
+                muted
+                loop
               />
             ) : (
               <img

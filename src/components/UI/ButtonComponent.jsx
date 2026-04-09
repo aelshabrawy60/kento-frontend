@@ -1,10 +1,9 @@
-function ButtonComponent({ label, onClick, loading = false , className=""}) {
+function ButtonComponent({ label, onClick, loading = false, className = "", type = "Solid" }) {
   return (
     <div
       onClick={!loading ? onClick : undefined}
-      className={`py-2 px-4 bg-primary rounded-md text-white w-full max-w-96 flex justify-center items-center gap-2 transition-opacity duration-200 select-none ${
-        loading ? "opacity-70 cursor-not-allowed" : "cursor-pointer "
-      } ${className}`}
+      className={`${className} py-2 px-4 box-border rounded-md w-full max-w-96 flex justify-center items-center gap-2 transition-opacity duration-200 select-none ${loading ? "opacity-70 cursor-not-allowed" : "cursor-pointer "
+        } ${type === "Solid" ? "bg-primary text-white" : " border-2 border-primary text-primary"}`}
     >
       {loading && (
         <svg

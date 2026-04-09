@@ -3,7 +3,7 @@ import ButtonComponent from './UI/ButtonComponent'
 import { IoChatbubblesSharp } from "react-icons/io5";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { BiCategory } from "react-icons/bi";
-import formatePrice from '../src/utils/formatePrice';
+import formatePrice from '../utils/formatePrice';
 import { Link } from 'react-router-dom';
 
 
@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 function VendorMiniProfile({ data }) {
     return (
         <div className='flex gap-8 items-center justify-between w-full mb-1'>
-            <div className='flex gap-4'>
+            <div className='flex gap-4 shrink-0'>
                 <div className='relative'>
                     <img className='w-18 h-18 rounded-full object-cover' src={data.user.profilePicture} alt={data.user.name} />
                     {data.rating && (
@@ -31,7 +31,10 @@ function VendorMiniProfile({ data }) {
                         <div>-</div>
                         <div className='flex justify-center items-center gap-1'>
                             <HiOutlineLocationMarker size={14} />
-                            <div>{data.user.region}</div>
+                            <div>
+                                {/* max 5 chars */}
+                                {data.user.region.length > 5 ? data.user.region.slice(0, 5) + '..' : data.user.region}
+                            </div>
                         </div>
                     </div>
                     <div className='text-primary font-medium'>
