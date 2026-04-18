@@ -14,7 +14,11 @@ function VendorProfile() {
   const fetchVendorData = async (id) => {
     setLoading(true);
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/clients/vendors/${id}`);
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/clients/vendors/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+        }
+      });
       setVendorData(response.data);
     } catch (error) {
       console.error('Error fetching vendor data:', error);

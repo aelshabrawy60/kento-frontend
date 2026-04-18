@@ -1,4 +1,5 @@
 import React from 'react'
+import SavePost from './SavePost'
 
 function VendorGallery({ data }) {
 
@@ -20,7 +21,14 @@ function VendorGallery({ data }) {
         const mediaUrl = item.mediaUrls[0]
 
         return (
-          <div key={index} className='break-inside-avoid'>
+          <div 
+            key={index} 
+            className='break-inside-avoid relative group select-none'
+            onDoubleClick={(e) => {
+              const btn = e.currentTarget.querySelector('.save-post-btn');
+              if (btn) btn.click();
+            }}
+          >
             {isVideo(mediaUrl) ? (
               <video
                 className='w-full rounded-lg'
@@ -32,11 +40,16 @@ function VendorGallery({ data }) {
               />
             ) : (
               <img
-                className='w-full rounded-lg'
+                className='w-full rounded-lg pointer-events-none'
                 src={mediaUrl}
                 alt="portfolio"
               />
             )}
+            <SavePost 
+              postId={item.id} 
+              defaultSaved={item.isSaved} 
+              className='hidden md:block md:opacity-0 md:group-hover:opacity-100'
+            />
           </div>
         )
       })}
