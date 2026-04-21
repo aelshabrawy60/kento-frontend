@@ -2,13 +2,13 @@ import { NavLink, useLocation } from "react-router-dom";
 import { RiHome5Fill } from "react-icons/ri";
 import { FaHeart } from "react-icons/fa6";
 import { IoChatbubblesSharp } from "react-icons/io5";
-import { IoPerson } from "react-icons/io5";
+import { HiClipboardDocumentCheck } from "react-icons/hi2";
 
 const routes = [
   { label: "home", path: "/", icon: <RiHome5Fill /> },
   { label: "saved", path: "/saved", icon: <FaHeart /> },
   { label: "chat", path: "/chats", icon: <IoChatbubblesSharp /> },
-  { label: "profile", path: "/profile", icon: <IoPerson /> },
+  { label: "contracts", path: "/contracts", icon: <HiClipboardDocumentCheck /> },
 ];
 
 function ClientNavbar() {

@@ -9,6 +9,7 @@ function DiscoverVendors() {
   const [vendors, setVendors] = React.useState([])
   const [selectedRegion, setSelectedRegion] = React.useState("All");
   const [selectedCategory, setSelectedCategory] = React.useState("");
+
   const [loading, setLoading] = React.useState(true);
 
   const fetchVendors = async () => {

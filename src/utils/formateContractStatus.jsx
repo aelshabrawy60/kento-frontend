@@ -8,6 +8,8 @@ function formateStatus(status) {
             return <div className='text-blue-500'>Completed</div>
         case 'CANCELLED':
             return <div className='text-red-500'>Cancelled</div>
+        case 'OFFERED':
+            return <div className='text-purple-500'>Waiting for Vendor Offer</div>
         default:
             return <div className='text-gray-500'>{status}</div>
     }

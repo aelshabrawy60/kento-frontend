@@ -105,10 +105,11 @@ function ClientChatsPage() {
         tokenOrProvider: token,
         userData: user,
     });
+    if (!isAuthenticated) return <Navigate to="/client/login" />;
+
 
     if (!client) return <div className="flex items-center justify-center h-screen">Setting up client & connection...</div>;
 
-    if (!isAuthenticated) return <Navigate to="/client/login" />;
 
     return (
         <div className='flex w-full'>

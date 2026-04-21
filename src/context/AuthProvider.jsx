@@ -6,32 +6,44 @@ export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
     const [accessToken, setAccessToken] = useState(null);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        const user = localStorage.getItem("user");
-        const accessToken = localStorage.getItem("accessToken");
-        if (user) setUser(JSON.parse(user));
-        if (accessToken) setAccessToken(accessToken);
+        const storedUser = localStorage.getItem("user");
+        const storedToken = localStorage.getItem("accessToken");
+        if (storedUser) setUser(JSON.parse(storedUser));
+        if (storedToken) setAccessToken(storedToken);
 
         // check if token valid
-        async function isTokenValid() {
+        async function checkToken() {
+            if (!storedToken) {
+                setIsAuthenticated(false);
+                setIsLoading(false);
+                return;
+            }
+
             try {
-                const response = await axios.post(`${import.meta.env.VITE_API_URL}/clients/verify`, {
+                const response = await axios.post(`${import.meta.env.VITE_API_URL}/clients/verify`, {}, {
                     headers: {
-                        Authorization: `Bearer ${accessToken}`
+                        Authorization: `Bearer ${storedToken}`
                     }
                 });
-                return response.data;
+                setIsAuthenticated(!!response.data);
             } catch (error) {
                 console.error("Token validation failed:", error);
-                return false;
+                setIsAuthenticated(false);
+            } finally {
+                setIsLoading(false);
             }
         }
 
-        setIsAuthenticated(isTokenValid());
+        checkToken();
 
     }, []);
+
+    if (isLoading) {
+        return null;
+    }
 
     return (
         <AuthContext.Provider value={{ user, accessToken, isAuthenticated }}>

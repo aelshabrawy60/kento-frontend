@@ -7,10 +7,9 @@ import ClientHomePage from './pages/Client/ClientHomePage'
 import ClientNavbar from './components/ClientNavbar'
 import VendorProfile from './pages/Client/VendorProfile'
 import ClientChatsPage from './pages/Client/ClientChatsPage';
-import ClientProfilePage from './pages/Client/ClientProfilePage'
 import ClientSavesPage from './pages/Client/ClientSavesPage'
-import { HiClipboardDocumentCheck } from 'react-icons/hi2'
 import ClientContractPage from './pages/Client/ClientContractPage'
+import ClientContractsPage from './pages/Client/ClientContractsPage'
 
 function ClientLayout() {
   return (
@@ -48,7 +47,7 @@ function App() {
           <Route path='/' element={<ClientLayout />}>
             <Route path='' element={<ClientHomePage />} />
             <Route path='vendors/:id' element={<VendorProfile />} />
-            <Route path='profile' element={<ClientProfilePage />} />
+            <Route path='contracts' element={<ClientContractsPage />} />
             <Route path='saved' element={<ClientSavesPage />} />
             <Route path='contracts/:id' element={<ClientContractPage />} />
           </Route>

@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ButtonComponent from './UI/ButtonComponent'
+import RequestQuoteModal from './RequestQuoteModal'
 import { useNavigate } from 'react-router-dom'
 import formatePrice from '../utils/formatePrice'
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { BiCategory } from "react-icons/bi";
 
-function VendorProfileSection({ data: { user: { name, profilePicture, region, id }, rating, category, price, about } }) {
+function VendorProfileSection({ data: { user: { name, profilePicture, region, id }, rating, category, price, about, id: vendorId } }) {
   const navigate = useNavigate()
+  const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
   return (
     <div className='w-full flex justify-center'>
       <div className="flex-col items-center max-w-lg w-full">
@@ -73,10 +75,11 @@ function VendorProfileSection({ data: { user: { name, profilePicture, region, id
         <div className="flex gap-3 md:mt-10 mt-4">
           <div className='flex-1 flex gap-2 mx-auto'>
             <ButtonComponent className='text-sm py-1' label={"Message"} onClick={() => navigate(`/chats/${id}`)} />
-            <ButtonComponent className='text-sm py-1' label={"Request a Quote"} type="Outline" />
+            <ButtonComponent className='text-sm py-1' label={"Request a Quote"} type="Outline" onClick={() => setIsQuoteModalOpen(true)} />
           </div>
         </div>
       </div>
+      <RequestQuoteModal isOpen={isQuoteModalOpen} onClose={() => setIsQuoteModalOpen(false)} vendorId={vendorId} />
     </div>
   )
 }
