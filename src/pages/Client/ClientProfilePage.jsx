@@ -1,8 +1,11 @@
 import React from 'react'
+import Contracts from '../../components/Contracts'
 
 function ClientProfilePage() {
     return (
-        <div>ClientProfilePage</div>
+        <div>
+            <Contracts />
+        </div>
     )
 }
 
