@@ -5,6 +5,7 @@ import VendorGallery from '../../components/VendorGallery';
 import ReviewsViewer from '../../components/ReviewsViewer';
 import RadioButtonsGroup from '../../components/UI/RadioButtonsGroup';
 import VendorProfileLoading from '../../components/Loading/VendorProfileLoading';
+import UploadImgs from '../../components/UI/UploadImgs';
 
 function VendorProfile() {
   const [vendorData, setVendorData] = React.useState({});

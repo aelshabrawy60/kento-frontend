@@ -2,6 +2,7 @@ import React from 'react'
 import SearchableDropdownComponent from './UI/SearchableDropdownComponent'
 import SelectComponent from './UI/SelectComponent'
 import ModalComponent from './UI/ModalComponent'
+import InputComponent from './UI/InputComponent'
 import { FaFilter } from "react-icons/fa";
 import ButtonComponent from './UI/ButtonComponent';
 
@@ -35,14 +36,18 @@ const categories = [
   "Products",
 ]
 
-function DiscoverVendorsFilter({ selectedRegion, setSelectedRegion, selectedCategory, setSelectedCategory }) {
+function DiscoverVendorsFilter({ selectedRegion, setSelectedRegion, selectedCategory, setSelectedCategory, minPrice, setMinPrice, maxPrice, setMaxPrice }) {
 
 
   return (
     <ModalComponent openButtonType='Outline' title="Filter Vendors" buttonLabel={<FaFilter />} confirmLabel={"Confirm"} className='flex gap-5'>
-      <div className='max-w-sm flex flex-col gap-2'>
+      <div className='max-w-sm flex flex-col gap-4'>
         <SearchableDropdownComponent label={"Region"} options={regions} selectedVal={selectedRegion} handleChange={setSelectedRegion} />
         <SelectComponent label={"Category"} options={categories} selectedVal={selectedCategory} handleChange={setSelectedCategory} />
+        <div className="flex gap-2">
+          <InputComponent type="number" label="Min Price" value={minPrice} onChange={(e) => setMinPrice(e.target.value)} placeholder="Min" />
+          <InputComponent type="number" label="Max Price" value={maxPrice} onChange={(e) => setMaxPrice(e.target.value)} placeholder="Max" />
+        </div>
       </div>
     </ModalComponent>
   )

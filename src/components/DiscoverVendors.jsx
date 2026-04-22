@@ -9,13 +9,19 @@ function DiscoverVendors() {
   const [vendors, setVendors] = React.useState([])
   const [selectedRegion, setSelectedRegion] = React.useState("All");
   const [selectedCategory, setSelectedCategory] = React.useState("");
+  const [minPrice, setMinPrice] = React.useState("");
+  const [maxPrice, setMaxPrice] = React.useState("");
 
   const [loading, setLoading] = React.useState(true);
 
   const fetchVendors = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/clients/discover?${selectedRegion !== "All" ? `region=${selectedRegion}&` : ""}category=${selectedCategory}`, {
+      let url = `${import.meta.env.VITE_API_URL}/clients/discover?${selectedRegion !== "All" ? `region=${selectedRegion}&` : ""}category=${selectedCategory}`;
+      if (minPrice || maxPrice) {
+        url += `&priceRange=${minPrice}-${maxPrice}`;
+      }
+      const response = await fetch(url, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
@@ -31,9 +37,14 @@ function DiscoverVendors() {
   };
 
   React.useEffect(() => {
-    fetchVendors();
-    console.log("fetching vendors with region:", selectedRegion, "and category:", selectedCategory);
-  }, [selectedCategory, selectedRegion]);
+    // Only fetch if inputs are empty or after user finished typing (optional optimization)
+    // Here we'll just fetch whenever changes occur like the original behavior.
+    const delayDebounceFn = setTimeout(() => {
+      fetchVendors();
+      console.log("fetching vendors with region:", selectedRegion, "category:", selectedCategory, "priceRange:", `${minPrice}-${maxPrice}`);
+    }, 500);
+    return () => clearTimeout(delayDebounceFn);
+  }, [selectedCategory, selectedRegion, minPrice, maxPrice]);
 
 
   if (vendors.length === 0 && !loading) {
@@ -41,7 +52,12 @@ function DiscoverVendors() {
       <div>
         <div className='flex justify-between mb-4'>
           <h2 className='text-2xl font-bold'>Discover</h2>
-          <DiscoverVendorsFilter selectedRegion={selectedRegion} setSelectedRegion={setSelectedRegion} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
+          <DiscoverVendorsFilter 
+            selectedRegion={selectedRegion} setSelectedRegion={setSelectedRegion} 
+            selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} 
+            minPrice={minPrice} setMinPrice={setMinPrice}
+            maxPrice={maxPrice} setMaxPrice={setMaxPrice}
+          />
         </div>
         <div className='flex justify-center items-center h-64'>
           <p className='text-gray-500'>No vendors found</p>
@@ -53,7 +69,12 @@ function DiscoverVendors() {
     <div>
       <div className='flex justify-between mb-4'>
         <h2 className='text-2xl font-bold'>Discover</h2>
-        <DiscoverVendorsFilter selectedRegion={selectedRegion} setSelectedRegion={setSelectedRegion} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
+        <DiscoverVendorsFilter 
+          selectedRegion={selectedRegion} setSelectedRegion={setSelectedRegion} 
+          selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} 
+          minPrice={minPrice} setMinPrice={setMinPrice}
+          maxPrice={maxPrice} setMaxPrice={setMaxPrice}
+        />
       </div>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6'>
         {loading ? (
