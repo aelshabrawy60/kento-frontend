@@ -1,6 +1,6 @@
 import React from 'react'
 import Contracts from '../../components/Contracts'
-import useAuth from '../../hooks/useAuth'
+import { useAuth } from '../../hooks/useAuth'
 import { Navigate } from 'react-router-dom'
 
 function ClientContractsPage() {

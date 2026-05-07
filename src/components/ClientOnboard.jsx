@@ -1,31 +1,9 @@
 import React, { useEffect } from 'react'
 import InputComponent from './UI/InputComponent'
 import { PhoneInputComponent } from './UI/PhoneInputComponent'
-import SearchableDropdownComponent from './UI/SearchableDropdownComponent'
 import ButtonComponent from './UI/ButtonComponent'
-import axios from 'axios'
-
-const regions = [
-    "Cairo",
-    "Giza",
-    "Alexandria",
-    "Aswan",
-    "Luxor",
-    "Suez",
-    "Port Said",
-    "Ismailia",
-    "Fayoum",
-    "Minya",
-    "Assiut",
-    "Sohag",
-    "Qena",
-    "Asyut",
-    "Red Sea",
-    "New Valley",
-    "Matrouh",
-    "North Sinai",
-    "South Sinai"
-]
+import RegionInputComponent from './UI/RegionInputComponent'
+import api from '../api/axios'
 
 function ClientOnboard() {
     const [fullName, setFullName] = React.useState('')
@@ -35,21 +13,29 @@ function ClientOnboard() {
     const [loading, setLoading] = React.useState(false)
     const [errors, setErrors] = React.useState([])
 
+    const validateInputs = () => {
+        const newErrors = []
+        if (!fullName.trim()) newErrors.push("Full Name is required")
+        if (!phoneNumber || phoneNumber.length < 10) newErrors.push("Valid Phone Number is required")
+        if (!region) newErrors.push("Location is required")
+        return newErrors
+    }
 
     const handleSubmit = async () => {
+        const validationErrors = validateInputs()
+        if (validationErrors.length > 0) {
+            setErrors(validationErrors)
+            return
+        }
+
         setLoading(true)
         setError(null)
         setErrors([])
 
         try {
-            await axios.post(
-                `${import.meta.env.VITE_API_URL}/clients/onboard`,
-                { name: fullName, phone: phoneNumber, region },
-                {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-                    }
-                }
+            await api.post(
+                '/clients/onboard',
+                { name: fullName, phone: phoneNumber, region }
             )
 
             // Redirect to Home page after successful onboarding
@@ -75,7 +61,7 @@ function ClientOnboard() {
             <div className='flex flex-col gap-4'>
                 <InputComponent label={"Full Name"} placeholder={"Enter your full name"} value={fullName} onChange={(e) => setFullName(e.target.value)} />
                 <PhoneInputComponent onChange={setPhoneNumber} label={"Phone Number"} placeholder={"Enter your phone number"} defaultCountry={"EG"} />
-                <SearchableDropdownComponent label={"Location"} options={regions} handleChange={setRegion} selectedVal={region} />
+                <RegionInputComponent region={region} setRegion={setRegion} label={"Location"} />
                 {/* Display validation errors if any */}
                 {errors.length > 0 && (
                     <ul className="text-red-500 text-sm mt-1 mb-2 list-disc list-inside">
@@ -93,4 +79,4 @@ function ClientOnboard() {
     )
 }
 
-export default ClientOnboard
+export default ClientOnboard

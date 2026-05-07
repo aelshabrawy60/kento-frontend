@@ -1,5 +1,5 @@
 import { useState } from "react";
-import {Eye, EyeOff} from "lucide-react"
+import { Eye, EyeOff } from "lucide-react"
 function InputComponent({ label, placeholder, value, onChange, type }) {
   const [showPassword, setShowPassword] = useState(false);
   const isPassword = type === "password";
@@ -15,6 +15,7 @@ function InputComponent({ label, placeholder, value, onChange, type }) {
           className="block w-full px-4 py-2 rounded-md border bg-[#F7FBFF] border-[#D4D7E3] sm:text-sm outline-0 pr-10"
           value={value}
           onChange={onChange}
+          name={label}
         />
         {isPassword && (
           <button
@@ -25,10 +26,10 @@ function InputComponent({ label, placeholder, value, onChange, type }) {
           >
             {showPassword ? (
               // Eye-off icon
-              <EyeOff size={18}/>
+              <EyeOff size={18} />
             ) : (
               // Eye icon
-              <Eye size={18}/>
+              <Eye size={18} />
             )}
           </button>
         )}

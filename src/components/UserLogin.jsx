@@ -2,12 +2,17 @@ import InputComponent from './UI/InputComponent'
 import ButtonComponent from './UI/ButtonComponent'
 import axios from "axios";
 import { useState } from 'react'
+import { useAuth } from '../hooks/useAuth'
+import { useNavigate } from 'react-router-dom'
 
 function UserLogin({ type = "clients" }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
+
+  const { login } = useAuth()
+  const navigate = useNavigate()
 
   const handleLogin = async () => {
     setLoading(true)
@@ -20,15 +25,12 @@ function UserLogin({ type = "clients" }) {
       )
 
       console.log('Success:', response.data)
-      localStorage.setItem('accessToken', response.data.accessToken)
-      localStorage.setItem('user', JSON.stringify(response.data.user))
-      localStorage.setItem('streamChatToken', response.data.streamChatToken)
-
-      // store the refresh token in the cookies
-      document.cookie = `refreshToken=${response.data.refreshToken}; path=/; secure; samesite=strict`
+      const { user, accessToken, refreshToken, streamChatToken } = response.data
+      
+      login(user, accessToken, refreshToken, streamChatToken)
 
       // Redirect to Home page after successful login
-      window.location.href = '/'
+      navigate(type === 'clients' ? '/' : '/vendor')
 
     } catch (err) {
       const problem = err.response?.data

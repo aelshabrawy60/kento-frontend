@@ -1,4 +1,4 @@
-import axios from 'axios';
+import api from '../api/axios';
 import React from 'react'
 import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
@@ -33,27 +33,11 @@ function SavePost({ postId, defaultSaved = false, className = '' }) {
 
         try {
             if (saved) {
-                await axios.delete(`${import.meta.env.VITE_API_URL}/clients/saves`,
-                    {
-                        data: {
-                            postId: postId,
-                        },
-                        headers: {
-                            Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-                        }
-                    }
-                )
+                await api.delete('/clients/saves', {
+                    data: { postId: postId },
+                })
             } else {
-                await axios.post(`${import.meta.env.VITE_API_URL}/clients/saves`,
-                    {
-                        postId: postId,
-                    },
-                    {
-                        headers: {
-                            Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-                        }
-                    }
-                )
+                await api.post('/clients/saves', { postId: postId })
             }
         } catch {
             setSaved(!saved)

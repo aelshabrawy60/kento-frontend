@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useParams, useNavigate, Navigate } from 'react-router-dom';
 import { Chat, useCreateChatClient, Channel, ChannelHeader, MessageList, MessageInput, Thread, Window, ChannelList, useChatContext } from 'stream-chat-react';
-import useAuth from '../../hooks/useAuth';
+import { useAuth } from '../../hooks/useAuth';
 
 const apiKey = import.meta.env.VITE_STREAM_API_KEY;
 const userId = localStorage.getItem('userId');

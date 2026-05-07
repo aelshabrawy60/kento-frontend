@@ -1,6 +1,6 @@
 import React from 'react'
 import SavedPostCard from './SavedPostCard'
-import axios from 'axios'
+import api from '../api/axios'
 
 function SavedPosts() {
     const [savedPosts, setSavedPosts] = React.useState([]);
@@ -9,11 +9,7 @@ function SavedPosts() {
     const fetchSavedPosts = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`${import.meta.env.VITE_API_URL}/clients/saves`, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-                }
-            });
+            const response = await api.get('/clients/saves');
             setSavedPosts(response.data.savedPosts);
         } catch (error) {
             console.error('Error fetching saved posts:', error);

@@ -1,5 +1,6 @@
 import React from 'react'
 import ContractCard from './ContractCard'
+import api from '../api/axios'
 
 function Contracts() {
     const [contracts, setContracts] = React.useState([]);
@@ -8,14 +9,8 @@ function Contracts() {
     const fetchContracts = async () => {
         setLoading(true);
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/clients/contracts`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-                }
-            });
-            const data = await response.json();
+            const response = await api.get('/clients/contracts');
+            const data = response.data;
             setContracts(data);
             console.log(data);
         } catch (error) {

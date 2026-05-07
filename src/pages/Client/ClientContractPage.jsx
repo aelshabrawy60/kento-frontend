@@ -1,7 +1,8 @@
 import React from 'react'
+import api from '../../api/axios';
 import VendorMiniProfile from '../../components/VendorMiniProfile';
 import { useParams } from 'react-router-dom';
-import useAuth from '../../hooks/useAuth';
+import { useAuth } from '../../hooks/useAuth';
 import { Navigate } from 'react-router-dom';
 import formateStatus from '../../utils/formateContractStatus';
 import formatePrice from '../../utils/formatePrice';
@@ -26,14 +27,8 @@ function ClientContractPage({ }) {
     const fetchContract = async () => {
         setLoading(true);
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/clients/contracts/${id}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-                }
-            });
-            const data = await response.json();
+            const response = await api.get(`/clients/contracts/${id}`);
+            const data = response.data;
             setContract(data);
             console.log(data);
         } catch (error) {
@@ -47,9 +42,6 @@ function ClientContractPage({ }) {
         fetchContract();
     }, []);
 
-    if (!isAuthenticated) {
-        return <Navigate to="/client/login" />;
-    }
 
     if (loading) {
         return (

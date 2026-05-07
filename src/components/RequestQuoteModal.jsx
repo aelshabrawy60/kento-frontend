@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
 import ButtonComponent from './UI/ButtonComponent';
-import axios from 'axios';
-import useAuth from '../hooks/useAuth';
+import api from '../api/axios';
+import { useAuth } from '../hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
 
 const RequestQuoteModal = ({ isOpen, onClose, vendorId }) => {
-  const { accessToken } = useAuth();
+   const { accessToken } = useAuth();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     vendorId: vendorId,
     description: '',
@@ -44,14 +46,10 @@ const RequestQuoteModal = ({ isOpen, onClose, vendorId }) => {
 
     // call contracts api
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/clients/contracts`, submitData, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`
-        }
-      });
+      const response = await api.post('/clients/contracts', submitData);
       console.log(response.data);
       // navigate to contracts page
-      window.location.href = '/contracts';
+      navigate('/contracts');
 
 
       onClose();

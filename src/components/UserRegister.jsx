@@ -30,7 +30,7 @@ function UserRegister({ type = "clients" }) {
 
       // Redirect to onboarding page
 
-      window.location.href = `/${type == "clients" ? "client" : "provider"}/onboard`
+      window.location.href = `/${type == "clients" ? "client" : "vendor"}/onboard`
 
     } catch (err) {
       const problem = err.response?.data
