@@ -171,13 +171,25 @@ function PaymentSuccessPage() {
   const [searchParams] = useSearchParams();
   const [countdown, setCountdown] = useState(7);
 
-  // Kashier appends ?paymentStatus=SUCCESS or ?paymentStatus=FAILED
+  /*
+   * Kashier appends these params to merchantRedirect on success or failure:
+   *   ?paymentStatus=SUCCESS|FAILED
+   *   &merchantOrderId=<your booking id>
+   *   &orderId=<kashier internal id>
+   *   &orderReference=<kashier reference>
+   *   &cardDataToken=<tokenized card>
+   *   &maskedCard=<masked PAN>
+   *   &merchantId=<your MID>
+   *   &mode=test|live
+   *   &signature=<hmac>
+   */
   const paymentStatus = searchParams.get('paymentStatus');
-  const isSuccess = paymentStatus === 'SUCCESS' || paymentStatus === null;
+  const mode          = searchParams.get('mode');
+  const merchantOrderId = searchParams.get('merchantOrderId') || searchParams.get('orderId');
 
-  // Test mode: Kashier appends mode=test
-  const mode = searchParams.get('mode');
-  const isTestMode = mode === 'test' || mode === null;
+  // Treat missing paymentStatus (direct page visit) as success for UX
+  const isSuccess  = paymentStatus === 'SUCCESS' || paymentStatus === null;
+  const isTestMode = mode === 'test';
 
   useEffect(() => {
     if (!isSuccess) return;
