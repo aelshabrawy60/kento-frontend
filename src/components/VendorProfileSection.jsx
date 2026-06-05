@@ -74,9 +74,7 @@ function VendorProfileSection({ data: { user: { name, profilePicture, region, id
         {/* Actions */}
         <div className="flex gap-3 md:mt-10 mt-4">
           <div className='flex-1 flex gap-2 mx-auto'>
-            <ButtonComponent className='text-sm py-1' label={"Message"} onClick={() => navigate(`/chats/${id}`)} />
-            <ButtonComponent className='text-sm py-1' label={"Request a Quote"} type="Outline" onClick={() => setIsQuoteModalOpen(true)} />
-          </div>
+            <ButtonComponent className='text-sm py-1' label={"Message"} onClick={() => navigate(`/chats/${id}`)} />          </div>
         </div>
       </div>
       <RequestQuoteModal isOpen={isQuoteModalOpen} onClose={() => setIsQuoteModalOpen(false)} vendorId={vendorId} />

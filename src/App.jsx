@@ -11,6 +11,8 @@ import ClientChatsPage from './pages/Client/ClientChatsPage';
 import ClientSavesPage from './pages/Client/ClientSavesPage'
 import ClientContractPage from './pages/Client/ClientContractPage'
 import ClientContractsPage from './pages/Client/ClientContractsPage'
+import ClientBookingsPage from './pages/Client/ClientBookingsPage'
+import PaymentSuccessPage from './pages/Client/PaymentSuccessPage'
 import VendorLoginPage from './pages/Vendor/VendorLoginPage'
 import VendorRegisterPage from './pages/Vendor/VendorRegisterPage'
 import VendorOnboardPage from './pages/Vendor/VendorOnboardPage'
@@ -90,6 +92,11 @@ function App() {
                 <ClientSavesPage />
               </ProtectedRoute>
             } />
+            <Route path='bookings' element={
+              <ProtectedRoute role="CLIENT">
+                <ClientBookingsPage />
+              </ProtectedRoute>
+            } />
             <Route path='contracts/:id' element={
               <ProtectedRoute role="CLIENT">
                 <ClientContractPage />
@@ -100,6 +107,10 @@ function App() {
           <Route path='/vendor/login' element={<VendorLoginPage />} />
           <Route path='/vendor/register' element={<VendorRegisterPage />} />
           <Route path='/vendor/onboard' element={<VendorOnboardPage />} />
+
+          {/* Payment callback pages — public so Kashier can redirect here */}
+          <Route path='/payment/success' element={<PaymentSuccessPage />} />
+          <Route path='/payment/failure' element={<PaymentSuccessPage />} />
 
           <Route path='/vendor' element={
             <ProtectedRoute role="VENDOR">
