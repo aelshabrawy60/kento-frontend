@@ -29,7 +29,7 @@ const BookingModal = ({ isOpen, onClose, packageData, vendorData }) => {
         try {
             await api.post('/clients/bookings', {
                 packageId: packageData.id,
-                date: selectedDate.toISOString(),
+                date: format(selectedDate, 'yyyy-MM-dd'),
             });
 
             toast.success("Booking requested successfully!");

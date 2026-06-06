@@ -1,85 +1,104 @@
-import React, { useState } from 'react'
-import ButtonComponent from './UI/ButtonComponent'
-import RequestQuoteModal from './RequestQuoteModal'
-import { useNavigate } from 'react-router-dom'
-import formatePrice from '../utils/formatePrice'
-import { HiOutlineLocationMarker } from "react-icons/hi";
-import { BiCategory } from "react-icons/bi";
+import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { IoChatbubblesSharp } from 'react-icons/io5';
+import { HiOutlineLocationMarker } from 'react-icons/hi';
+import { BiCategory } from 'react-icons/bi';
+import { Star, Briefcase, Globe } from 'lucide-react';
+import formatePrice from '../utils/formatePrice';
+import { AuthContext } from '../context/AuthProvider';
+import RequestQuoteModal from './RequestQuoteModal';
 
-function VendorProfileSection({ data: { user: { name, profilePicture, region, id }, rating, category, price, about, id: vendorId } }) {
-  const navigate = useNavigate()
+function VendorProfileSection({ data: { user: { name, profilePicture, region, id }, rating, category, price, about, id: vendorId, experience, portfolioUrl, type } }) {
+  const navigate = useNavigate();
   const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
+
+  const typeLabel = type === 0 ? 'Photographer' : type === 1 ? 'Videographer' : type === 2 ? 'Photo & Video' : null;
+
   return (
-    <div className='w-full flex justify-center'>
-      <div className="flex-col items-center max-w-lg w-full">
-        <div className='
-                    flex gap-4 w-fit'>
-
-          {/* Avatar + Rating */}
-          <div className="relative shrink-0 self-start">
-            {profilePicture ? (
-              <img
-                src={profilePicture}
-                alt={name}
-                className="w-[120px] h-[120px] rounded-full object-cover"
-              />
-            ) : (
-              <div className="w-[120px] h-[120px] rounded-full
-                          bg-gradient-to-br from-slate-300 to-slate-400
-                          flex items-center justify-center text-white text-3xl lg:text-4xl">
-                👤
-              </div>
-            )}
-            {/* Rating badge */}
-            {rating && (
-              <div className="absolute bottom-1 right-0 bg-primary text-white
-                        rounded-full px-2 py-0.5 flex justify-center items-center leading-tight w-8 h-8">
-                <span className="block text-xs font-bold">{rating}</span>
-              </div>
-            )}
-          </div>
-          {/* Content */}
-          <div className="flex flex-col gap-3 flex-1">
-
-            {/* Mobile: name inline with avatar (top-row) → achieved via parent flex on mobile */}
-            <h2 className="text-xl lg:text-2xl font-bold text-gray-900">{name}</h2>
-
-            {/* Meta */}
-            <div className="flex gap-1 flex-col lg:gap-6">
-              <div className="flex items-center gap-1.5 text-sm text-gray-500">
-                {/* Hamburger / category icon */}
-                <BiCategory className="w-3.5 h-3.5 shrink-0" />
-                <span>{category} -</span>
-                <span className="text-primary font-semibold">From {formatePrice(price, "EGP")}</span>
-              </div>
-
-              <div className="flex items-center gap-1.5 text-sm text-gray-500">
-                {/* Pin icon */}
-                <HiOutlineLocationMarker className="w-3.5 h-3.5 shrink-0" />
-                <span>{region}</span>
-              </div>
+    <div className="w-full">
+      <div className="flex flex-col sm:flex-row gap-5 items-start">
+        {/* Avatar */}
+        <div className="relative shrink-0">
+          {profilePicture ? (
+            <img
+              src={profilePicture}
+              alt={name}
+              className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl object-cover border-4 border-white shadow-lg"
+            />
+          ) : (
+            <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl border-4 border-white shadow-lg flex items-center justify-center text-4xl"
+              style={{ background: 'linear-gradient(135deg, #008D87 0%, #003d3b 100%)' }}>
+              👤
             </div>
-
-            {/* Divider (mobile only) */}
-            <hr className="border-gray-100 lg:hidden" />
-
-            {/* Description */}
-            <p className="text-sm text-gray-500 leading-relaxed lg:max-w-md">
-              {about}
-            </p>
-
-
-          </div>
+          )}
+          {rating && (
+            <div className="absolute -bottom-2 -right-2 flex items-center gap-1 text-xs font-bold px-2 py-1 rounded-full text-white shadow-md"
+              style={{ background: 'linear-gradient(135deg, #008D87, #005f5b)' }}>
+              <Star size={10} fill="white" /> {rating}
+            </div>
+          )}
         </div>
-        {/* Actions */}
-        <div className="flex gap-3 md:mt-10 mt-4">
-          <div className='flex-1 flex gap-2 mx-auto'>
-            <ButtonComponent className='text-sm py-1' label={"Message"} onClick={() => navigate(`/chats/${id}`)} />          </div>
+
+        {/* Info */}
+        <div className="flex-1 min-w-0">
+          <h1 className="text-2xl font-black text-gray-900 leading-tight">{name}</h1>
+
+          {/* Meta chips */}
+          <div className="flex flex-wrap gap-2 mt-2.5">
+            {category && (
+              <span className="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 rounded-full bg-primary/10 text-primary border border-primary/20">
+                <BiCategory size={11} /> {category}
+              </span>
+            )}
+            {typeLabel && (
+              <span className="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 rounded-full bg-violet-50 text-violet-700 border border-violet-200">
+                {type === 1 ? '🎥' : '📷'} {typeLabel}
+              </span>
+            )}
+            {region && (
+              <span className="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 rounded-full bg-gray-100 text-gray-600">
+                <HiOutlineLocationMarker size={11} /> {region}
+              </span>
+            )}
+            {experience > 0 && (
+              <span className="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-100">
+                <Briefcase size={11} /> {experience} yrs exp
+              </span>
+            )}
+          </div>
+
+          {/* Price */}
+          <p className="text-primary font-black text-lg mt-3">
+            From <span>{formatePrice(price, 'EGP')}</span>
+          </p>
+
+          {/* About */}
+          {about && (
+            <p className="text-sm text-gray-500 mt-2 leading-relaxed max-w-lg line-clamp-3">{about}</p>
+          )}
         </div>
       </div>
+
+      {/* Action buttons */}
+      <div className="flex flex-wrap gap-3 mt-5">
+        <button
+          onClick={() => navigate(`/chats/${id}`)}
+          className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:scale-105 active:scale-95 shadow-md"
+          style={{ background: 'linear-gradient(135deg, #008D87 0%, #005f5b 100%)' }}
+        >
+          <IoChatbubblesSharp size={16} /> Message
+        </button>
+        {portfolioUrl && (
+          <a href={portfolioUrl} target="_blank" rel="noreferrer"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-primary border border-primary/20 bg-primary/5 hover:bg-primary/10 transition-all">
+            <Globe size={15} /> Portfolio
+          </a>
+        )}
+      </div>
+
       <RequestQuoteModal isOpen={isQuoteModalOpen} onClose={() => setIsQuoteModalOpen(false)} vendorId={vendorId} />
     </div>
-  )
+  );
 }
 
-export default VendorProfileSection
+export default VendorProfileSection;
