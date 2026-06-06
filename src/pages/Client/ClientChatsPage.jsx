@@ -4,26 +4,10 @@ import { Chat, useCreateChatClient, Channel, ChannelHeader, MessageList, Message
 import { useAuth } from '../../hooks/useAuth';
 
 const apiKey = import.meta.env.VITE_STREAM_API_KEY;
-const userId = localStorage.getItem('userId');
-const token = localStorage.getItem('streamChatToken');
-const userName = localStorage.getItem('userName');
-
-const user = {
-    id: userId,
-    name: userName,
-    image: `https://getstream.io/random_png/?name=${userName}`,
-};
-
 const sort = { last_message_at: -1 };
-const filters = {
-    type: 'messaging',
-    members: { $in: [userId] },
-};
-const options = {
-    limit: 10,
-};
+const options = { limit: 10 };
 
-const ChatLayout = ({ filters, sort, options, id }) => {
+const ChatLayout = ({ filters, sort, options, id, currentUserId }) => {
     const { client, channel, setActiveChannel } = useChatContext();
     const navigate = useNavigate();
 
@@ -35,7 +19,7 @@ const ChatLayout = ({ filters, sort, options, id }) => {
                 // By providing just the members array and omitting the explicit ID, 
                 // Stream natively handles creating or returning the deterministic 1-on-1 channel.
                 const newChannel = client.channel('messaging', {
-                    members: [user.id, id],
+                    members: [currentUserId, id],
                 });
                 await newChannel.watch();
 
@@ -47,7 +31,7 @@ const ChatLayout = ({ filters, sort, options, id }) => {
         };
 
         createChannelIfNotExists();
-    }, [client, id, setActiveChannel]);
+    }, [client, id, setActiveChannel, currentUserId]);
     // We consider it active if a channel is selected OR if there is an ID in the URL.
     const isChannelActive = !!channel || !!id;
 
@@ -98,23 +82,40 @@ const ChatLayout = ({ filters, sort, options, id }) => {
 
 function ClientChatsPage() {
     const { id } = useParams();
-    const { isAuthenticated } = useAuth();
+    const { isAuthenticated, user: authUser } = useAuth();
+
+    // Read stream token from localStorage (set during login)
+    const token = localStorage.getItem('streamChatToken');
+
+    // Build the Stream user object from the auth context user
+    const userData = authUser
+        ? {
+              id: String(authUser.id),
+              name: authUser.name,
+              image: `https://getstream.io/random_png/?name=${authUser.name}`,
+          }
+        : null;
+
+    // Build filters using the current user's id
+    const filters = userData
+        ? { type: 'messaging', members: { $in: [userData.id] } }
+        : null;
 
     const client = useCreateChatClient({
         apiKey,
-        tokenOrProvider: token,
-        userData: user,
+        tokenOrProvider: token ?? '',
+        userData: userData ?? { id: '' },
     });
+
     if (!isAuthenticated) return <Navigate to="/client/login" />;
 
-
-    if (!client) return <div className="flex items-center justify-center h-screen">Setting up client & connection...</div>;
-
+    if (!client || !userData || !filters)
+        return <div className="flex items-center justify-center h-screen">Setting up client &amp; connection...</div>;
 
     return (
         <div className='flex w-full'>
             <Chat client={client} theme='str-chat__theme-custom'>
-                <ChatLayout filters={filters} sort={sort} options={options} id={id} />
+                <ChatLayout filters={filters} sort={sort} options={options} id={id} currentUserId={userData.id} />
             </Chat>
         </div>
     );

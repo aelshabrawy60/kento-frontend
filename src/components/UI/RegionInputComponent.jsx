@@ -1,35 +1,16 @@
-import React from 'react';
-import SearchableDropdownComponent from './SearchableDropdownComponent';
+import LocationAutocomplete from './LocationAutocomplete';
 
-const regions = [
-    "Cairo",
-    "Giza",
-    "Alexandria",
-    "Aswan",
-    "Luxor",
-    "Suez",
-    "Port Said",
-    "Ismailia",
-    "Fayoum",
-    "Minya",
-    "Assiut",
-    "Sohag",
-    "Qena",
-    "Asyut",
-    "Red Sea",
-    "New Valley",
-    "Matrouh",
-    "North Sinai",
-    "South Sinai"
-];
-
+/**
+ * RegionInputComponent — wrapper that uses the new smart Egypt location autocomplete.
+ * Keeps the same props interface ({ region, setRegion, label }) so all existing
+ * usages (ClientOnboard, VendorOnboardPage, VendorProfilePage) work without changes.
+ */
 function RegionInputComponent({ region, setRegion, label = "Location" }) {
     return (
-        <SearchableDropdownComponent 
-            label={label} 
-            options={regions} 
-            handleChange={setRegion} 
-            selectedVal={region} 
+        <LocationAutocomplete
+            label={label}
+            value={region}
+            onChange={setRegion}
         />
     );
 }

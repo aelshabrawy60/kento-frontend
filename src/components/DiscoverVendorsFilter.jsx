@@ -1,34 +1,12 @@
 import React from 'react'
-import SearchableDropdownComponent from './UI/SearchableDropdownComponent'
+import { governorates } from '../data/egyptLocations'
 import SelectComponent from './UI/SelectComponent'
 import ModalComponent from './UI/ModalComponent'
 import InputComponent from './UI/InputComponent'
 import { FaFilter } from "react-icons/fa";
 import ButtonComponent from './UI/ButtonComponent';
 
-
-const regions = [
-  "All",
-  "Cairo",
-  "Giza",
-  "Alexandria",
-  "Aswan",
-  "Luxor",
-  "Suez",
-  "Port Said",
-  "Ismailia",
-  "Fayoum",
-  "Minya",
-  "Assiut",
-  "Sohag",
-  "Qena",
-  "Asyut",
-  "Red Sea",
-  "New Valley",
-  "Matrouh",
-  "North Sinai",
-  "South Sinai"
-]
+const regions = ["All", ...governorates];
 
 const categories = [
   "Events",
@@ -38,11 +16,10 @@ const categories = [
 
 function DiscoverVendorsFilter({ selectedRegion, setSelectedRegion, selectedCategory, setSelectedCategory, minPrice, setMinPrice, maxPrice, setMaxPrice }) {
 
-
   return (
     <ModalComponent openButtonType='Outline' title="Filter Vendors" buttonLabel={<FaFilter />} confirmLabel={"Confirm"} className='flex gap-5'>
       <div className='max-w-sm flex flex-col gap-4'>
-        <SearchableDropdownComponent label={"Region"} options={regions} selectedVal={selectedRegion} handleChange={setSelectedRegion} />
+        <SelectComponent label={"Governorate"} options={regions} selectedVal={selectedRegion} handleChange={setSelectedRegion} />
         <SelectComponent label={"Category"} options={categories} selectedVal={selectedCategory} handleChange={setSelectedCategory} />
         <div className="flex gap-2">
           <InputComponent type="number" label="Min Price" value={minPrice} onChange={(e) => setMinPrice(e.target.value)} placeholder="Min" />
@@ -53,4 +30,4 @@ function DiscoverVendorsFilter({ selectedRegion, setSelectedRegion, selectedCate
   )
 }
 
-export default DiscoverVendorsFilter
+export default DiscoverVendorsFilter

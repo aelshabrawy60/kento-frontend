@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from "react";
-import axios from "axios";
+import api from "../api/axios";
 
 export const AuthContext = createContext();
 
@@ -46,15 +46,18 @@ export function AuthProvider({ children }) {
             }
 
             try {
-                // Since verify endpoint might be role specific or generic
-                // We'll try the generic one if it exists or just use the client one for now
-                // as the backend seems to share the secret
-                const response = await axios.post(`${import.meta.env.VITE_API_URL}/clients/verify`, {}, {
+                // Use the intercepted api instance so expired tokens are
+                // automatically refreshed via the response interceptor in axios.js.
+                // Also pick the correct endpoint based on the stored user role.
+                const storedUser = JSON.parse(localStorage.getItem("user"));
+                const role = storedUser?.role?.toLowerCase() === 'vendor' ? 'vendors' : 'clients';
+
+                const response = await api.post(`/${role}/verify`, {}, {
                     headers: {
                         Authorization: `Bearer ${storedToken}`
                     }
                 });
-                
+
                 if (response.data) {
                     setIsAuthenticated(true);
                     setUser(response.data);
@@ -63,9 +66,8 @@ export function AuthProvider({ children }) {
                 }
             } catch (error) {
                 console.error("Token validation failed:", error);
-                // If it's a 401, it might be expired, but the axios interceptor 
-                // isn't used here yet. For now, we'll just set as unauthenticated
-                // and let the first actual API call handle the refresh if needed.
+                // The interceptor already attempted a refresh. If we still get
+                // an error here, the refresh token is also invalid/expired.
                 setIsAuthenticated(false);
             } finally {
                 setIsLoading(false);

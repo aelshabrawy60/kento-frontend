@@ -10,6 +10,7 @@ function SavedPosts() {
         setLoading(true);
         try {
             const response = await api.get('/clients/saves');
+            console.log('Fetched saved posts:', response.data);
             setSavedPosts(response.data.savedPosts);
         } catch (error) {
             console.error('Error fetching saved posts:', error);
