@@ -21,9 +21,9 @@ const TYPES = ['Photographer', 'Videographer', 'Both'];
 function SectionCard({ id, icon, title, accentColor, children, collapsible = false, badge }) {
   const [open, setOpen] = useState(true);
   return (
-    <section id={id} className="bg-white rounded-3xl shadow-sm border border-gray-100/80 overflow-hidden">
+    <section id={id} className="rounded-3xl border-none overflow-hidden">
       <div
-        className={`flex items-center justify-between px-6 sm:px-8 py-5 ${collapsible ? 'cursor-pointer select-none' : ''}`}
+        className={`flex items-center justify-between sm:px-8 py-5 ${collapsible ? 'cursor-pointer select-none' : ''}`}
         onClick={collapsible ? () => setOpen(v => !v) : undefined}
       >
         <div className="flex items-center gap-3.5">
@@ -43,7 +43,7 @@ function SectionCard({ id, icon, title, accentColor, children, collapsible = fal
         )}
       </div>
       <div className={`border-t border-gray-50 transition-all ${!collapsible || open ? '' : 'hidden'}`}>
-        <div className="px-6 sm:px-8 py-6">{children}</div>
+        <div className="sm:px-8 py-6">{children}</div>
       </div>
     </section>
   );
@@ -169,7 +169,7 @@ function VendorProfilePage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F4F6FA] pb-32">
+    <div className="min-h-screen pb-32">
 
       {/* ══════════════════════════════════════════════
           HERO BLOCK — cover + overlapping avatar card
@@ -387,7 +387,7 @@ function VendorProfilePage() {
         >
           <div className="flex flex-col lg:flex-row gap-6 items-start">
             {/* Calendar */}
-            <div className="bg-gray-50 rounded-2xl p-3 border border-gray-100 shrink-0 self-start">
+            <div className="bg-gray-50 rounded-2xl p-2 border border-gray-100 shrink-0 self-start">
               <DayPicker
                 mode="multiple"
                 selected={unavailableDays}

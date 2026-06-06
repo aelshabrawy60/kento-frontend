@@ -9,8 +9,7 @@ const routes = [
   { label: "home",      path: "/",          icon: <RiHome5Fill /> },
   { label: "saved",     path: "/saved",     icon: <FaHeart /> },
   { label: "bookings",  path: "/bookings",  icon: <CalendarCheck size={18} /> },
-  { label: "chat",      path: "/chats",     icon: <IoChatbubblesSharp /> },
-  { label: "contracts", path: "/contracts", icon: <HiClipboardDocumentCheck /> },
+  { label: "chat",      path: "/chats",     icon: <IoChatbubblesSharp /> }
 ];
 
 function ClientNavbar() {

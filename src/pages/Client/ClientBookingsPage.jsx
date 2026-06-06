@@ -222,7 +222,7 @@ function ClientBookingsPage() {
   const completionRequests = inProgressBookings.filter(b => b.completionRequestedByVendor).length;
 
   return (
-    <div className="min-h-screen bg-[#F4F6FA] pb-10">
+    <div className="min-h-screen pb-10">
 
       {/* Hero header */}
       <div className="rounded-3xl mb-6 p-6 sm:p-8 relative overflow-hidden"

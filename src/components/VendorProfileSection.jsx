@@ -83,17 +83,11 @@ function VendorProfileSection({ data: { user: { name, profilePicture, region, id
       <div className="flex flex-wrap gap-3 mt-5">
         <button
           onClick={() => navigate(`/chats/${id}`)}
-          className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:scale-105 active:scale-95 shadow-md"
+          className="flex w-full items-center justify-center md:max-w-xs gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:scale-105 active:scale-95 shadow-md"
           style={{ background: 'linear-gradient(135deg, #008D87 0%, #005f5b 100%)' }}
         >
           <IoChatbubblesSharp size={16} /> Message
         </button>
-        {portfolioUrl && (
-          <a href={portfolioUrl} target="_blank" rel="noreferrer"
-            className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-primary border border-primary/20 bg-primary/5 hover:bg-primary/10 transition-all">
-            <Globe size={15} /> Portfolio
-          </a>
-        )}
       </div>
 
       <RequestQuoteModal isOpen={isQuoteModalOpen} onClose={() => setIsQuoteModalOpen(false)} vendorId={vendorId} />

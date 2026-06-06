@@ -10,7 +10,6 @@ import VendorProfile from './pages/Client/VendorProfile'
 import ClientChatsPage from './pages/Client/ClientChatsPage';
 import ClientSavesPage from './pages/Client/ClientSavesPage'
 import ClientContractPage from './pages/Client/ClientContractPage'
-import ClientContractsPage from './pages/Client/ClientContractsPage'
 import ClientBookingsPage from './pages/Client/ClientBookingsPage'
 import PaymentSuccessPage from './pages/Client/PaymentSuccessPage'
 import VendorLoginPage from './pages/Vendor/VendorLoginPage'
@@ -19,7 +18,6 @@ import VendorOnboardPage from './pages/Vendor/VendorOnboardPage'
 import VendorDashboardPage from './pages/Vendor/VendorDashboardPage'
 import VendorProfilePage from './pages/Vendor/VendorProfilePage'
 import VendorContractPage from './pages/Vendor/VendorContractPage'
-import VendorContractsPage from './pages/Vendor/VendorContractsPage'
 import VendorNavbar from './components/VendorNavbar'
 import VendorPackagesPage from './pages/Vendor/VendorPackagesPage'
 
@@ -82,11 +80,6 @@ function App() {
           <Route path='/' element={<ClientLayout />}>
             <Route path='' element={<ClientHomePage />} />
             <Route path='vendors/:id' element={<VendorProfile />} />
-            <Route path='contracts' element={
-              <ProtectedRoute role="CLIENT">
-                <ClientContractsPage />
-              </ProtectedRoute>
-            } />
             <Route path='saved' element={
               <ProtectedRoute role="CLIENT">
                 <ClientSavesPage />
@@ -95,11 +88,6 @@ function App() {
             <Route path='bookings' element={
               <ProtectedRoute role="CLIENT">
                 <ClientBookingsPage />
-              </ProtectedRoute>
-            } />
-            <Route path='contracts/:id' element={
-              <ProtectedRoute role="CLIENT">
-                <ClientContractPage />
               </ProtectedRoute>
             } />
           </Route>
@@ -118,8 +106,6 @@ function App() {
             </ProtectedRoute>
           }>
             <Route path='' element={<VendorDashboardPage />} />
-            <Route path='contracts' element={<VendorContractsPage />} />
-            <Route path='contracts/:id' element={<VendorContractPage />} />
             <Route path='profile' element={<VendorProfilePage />} />
             <Route path='packages' element={<VendorPackagesPage />} />
           </Route>
