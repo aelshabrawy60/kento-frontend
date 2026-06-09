@@ -300,9 +300,20 @@ function VendorDashboardPage() {
         <div className="p-6 sm:p-8">
           {/* Loading */}
           {bookingsLoading && (
-            <div className="flex items-center justify-center py-16 gap-3 text-gray-400">
-              <Loader2 size={24} className="animate-spin text-primary" />
-              <span className="text-sm">Loading requests...</span>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <div key={i} className="bg-white rounded-2xl border border-gray-100 p-5 h-[240px] animate-pulse flex flex-col gap-4">
+                  <div className="flex gap-3">
+                    <div className="w-10 h-10 rounded-full bg-slate-200"></div>
+                    <div className="flex flex-col gap-2 w-full mt-1">
+                      <div className="h-4 bg-slate-200 rounded w-1/3"></div>
+                      <div className="h-3 bg-slate-200 rounded w-1/4"></div>
+                    </div>
+                  </div>
+                  <div className="h-20 bg-slate-100 rounded-xl w-full border border-slate-200"></div>
+                  <div className="h-10 bg-slate-200 rounded-xl w-full mt-auto"></div>
+                </div>
+              ))}
             </div>
           )}
 

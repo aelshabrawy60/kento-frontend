@@ -1,6 +1,7 @@
 import React from 'react'
 import ContractCard from './ContractCard'
 import api from '../api/axios'
+import ContractCardLoading from './Loading/ContractCardLoading'
 
 function Contracts() {
     const [contracts, setContracts] = React.useState([]);
@@ -27,7 +28,14 @@ function Contracts() {
     if (loading) {
         return (
             <div>
-                <h2 className='text-2xl font-bold'>Contracts</h2>
+                <div className='flex justify-between mb-4'>
+                    <h2 className='text-2xl font-bold'>Contracts</h2>
+                </div>
+                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6'>
+                    {Array.from({ length: 8 }).map((_, i) => (
+                        <ContractCardLoading key={i} />
+                    ))}
+                </div>
             </div>
         )
     }

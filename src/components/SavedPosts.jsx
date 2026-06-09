@@ -1,6 +1,7 @@
 import React from 'react'
 import SavedPostCard from './SavedPostCard'
 import api from '../api/axios'
+import SavedPostCardLoading from './Loading/SavedPostCardLoading'
 
 function SavedPosts() {
     const [savedPosts, setSavedPosts] = React.useState([]);
@@ -28,11 +29,19 @@ function SavedPosts() {
             <div className='flex justify-between mb-4'>
                 <h2 className='text-2xl font-bold'>Saved</h2>
             </div>
-            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6'>
-                {savedPosts.map((item, index) => (
-                    <SavedPostCard key={index} data={item} />
-                ))}
-            </div>
+            {loading ? (
+                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6'>
+                    {Array.from({ length: 8 }).map((_, i) => (
+                        <SavedPostCardLoading key={i} />
+                    ))}
+                </div>
+            ) : (
+                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6'>
+                    {savedPosts.map((item, index) => (
+                        <SavedPostCard key={index} data={item} />
+                    ))}
+                </div>
+            )}
         </div>
     )
 }

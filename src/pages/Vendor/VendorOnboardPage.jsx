@@ -8,13 +8,14 @@ import UploadImgs from '../../components/UI/UploadImgs';
 import RegionInputComponent from '../../components/UI/RegionInputComponent';
 import { AuthContext } from '../../context/AuthProvider';
 import { CheckCircle, ChevronRight, ChevronLeft } from 'lucide-react';
+import { useCategories } from '../../hooks/useCategories';
 
-const CATEGORIES = ["Fashion", "Wedding", "Product", "Portrait", "Event", "Real Estate", "Other"];
 const TYPES = ["Photographer", "Videographer", "Both"];
 
 function VendorOnboardPage() {
     const navigate = useNavigate();
     const { accessToken } = useContext(AuthContext);
+    const { categories } = useCategories();
     
     const [step, setStep] = useState(1);
     const [loading, setLoading] = useState(false);
@@ -173,7 +174,7 @@ function VendorOnboardPage() {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                                 <SelectComponent
                                     label="Category"
-                                    options={CATEGORIES}
+                                    options={categories}
                                     selectedVal={formData.category}
                                     handleChange={(val) => handleChange('category', val)}
                                 />

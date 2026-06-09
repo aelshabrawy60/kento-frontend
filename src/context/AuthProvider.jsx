@@ -15,12 +15,12 @@ export function AuthProvider({ children }) {
         setIsAuthenticated(true);
         localStorage.setItem("user", JSON.stringify(userData));
         localStorage.setItem("accessToken", token);
-        localStorage.setItem("streamChatToken", streamToken);
+        if (streamToken) localStorage.setItem("streamChatToken", streamToken);
         document.cookie = `refreshToken=${refreshToken}; path=/; secure; samesite=strict`;
     };
 
     const logout = () => {
-        const type = user?.role?.toLowerCase() === 'vendor' ? 'vendor' : 'client';
+        const role = user?.role?.toLowerCase();
         setUser(null);
         setAccessToken(null);
         setIsAuthenticated(false);
@@ -28,7 +28,11 @@ export function AuthProvider({ children }) {
         localStorage.removeItem("accessToken");
         localStorage.removeItem("streamChatToken");
         document.cookie = 'refreshToken=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-        window.location.href = `/${type}/login`;
+        if (role === 'admin') {
+            window.location.href = '/admin/login';
+        } else {
+            window.location.href = `/${role === 'vendor' ? 'vendor' : 'client'}/login`;
+        }
     };
 
     useEffect(() => {
@@ -46,13 +50,19 @@ export function AuthProvider({ children }) {
             }
 
             try {
-                // Use the intercepted api instance so expired tokens are
-                // automatically refreshed via the response interceptor in axios.js.
-                // Also pick the correct endpoint based on the stored user role.
-                const storedUser = JSON.parse(localStorage.getItem("user"));
-                const role = storedUser?.role?.toLowerCase() === 'vendor' ? 'vendors' : 'clients';
+                // Pick the correct verify endpoint based on the stored user role.
+                const parsed = JSON.parse(localStorage.getItem("user"));
+                const role = parsed?.role?.toLowerCase();
+                let endpoint;
+                if (role === 'admin') {
+                    endpoint = '/admin/verify';
+                } else if (role === 'vendor') {
+                    endpoint = '/vendors/verify';
+                } else {
+                    endpoint = '/clients/verify';
+                }
 
-                const response = await api.post(`/${role}/verify`, {}, {
+                const response = await api.post(endpoint, {}, {
                     headers: {
                         Authorization: `Bearer ${storedToken}`
                     }
@@ -83,4 +93,3 @@ export function AuthProvider({ children }) {
         </AuthContext.Provider>
     );
 };
-

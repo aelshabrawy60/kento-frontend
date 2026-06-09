@@ -12,8 +12,11 @@ function ClientLoginPage() {
                 <div className='flex justify-center items-center gap-6 md:order-1'>
                     <div className='max-w-96'>
                         <div className='mb-8'>
-                            <div className='text-3xl md:text-4xl font-bold mb-4'>Login</div>
+                            <div className='text-3xl md:text-4xl font-bold mb-4'>Client Login</div>
                             <p className='text-gray-600'>Today is a new day, Login to your account to start manage your projects</p>
+                            <div className='mt-2 text-sm text-gray-600'>
+                                Are you a vendor? <Link className='text-blue-600 font-semibold' to='/vendor/login'>Login here</Link>
+                            </div>
                         </div>
                         <UserLogin type={"clients"} />
                         <div className='flex justify-center mt-8'>

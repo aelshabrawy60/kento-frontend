@@ -12,8 +12,11 @@ function ClientRegisterPage() {
                 <div className='flex justify-center items-center gap-6 md:order-1'>
                     <div className='max-w-96 w-full'>
                         <div className='mb-8'>
-                            <div className='text-3xl md:text-4xl font-bold mb-4'>Register</div>
+                            <div className='text-3xl md:text-4xl font-bold mb-4'>Client Register</div>
                             <p className='text-gray-600'>Today is a new day, Create new account</p>
+                            <div className='mt-2 text-sm text-gray-600'>
+                                Are you a vendor? <Link className='text-blue-600 font-semibold' to='/vendor/register'>Register here</Link>
+                            </div>
                         </div>
                         <UserRegister type={"clients"} />
                         <div className='flex justify-center mt-8'>

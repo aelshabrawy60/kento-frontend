@@ -1,6 +1,7 @@
 import React from 'react'
 import api from '../../api/axios';
 import VendorMiniProfile from '../../components/VendorMiniProfile';
+import PageLoading from '../../components/Loading/PageLoading';
 import { useParams } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { Navigate } from 'react-router-dom';
@@ -44,11 +45,7 @@ function ClientContractPage({ }) {
 
 
     if (loading) {
-        return (
-            <div>
-                <h2 className='text-2xl font-bold'>Contract</h2>
-            </div>
-        )
+        return <PageLoading />;
     }
 
     if (!contract && !loading) {

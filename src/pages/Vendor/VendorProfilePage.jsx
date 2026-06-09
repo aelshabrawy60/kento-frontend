@@ -13,8 +13,10 @@ import {
 } from 'lucide-react';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/style.css';
+import PageLoading from '../../components/Loading/PageLoading';
 
-const CATEGORIES = ['Fashion', 'Wedding', 'Product', 'Portrait', 'Event', 'Real Estate', 'Other'];
+import { useCategories } from '../../hooks/useCategories';
+
 const TYPES = ['Photographer', 'Videographer', 'Both'];
 
 // ─── Section Card ────────────────────────────────────────────────────────────
@@ -62,6 +64,7 @@ function InfoChip({ icon, label, color = '#6B7280', bg = '#F9FAFB' }) {
 // ─── Main Component ──────────────────────────────────────────────────────────
 function VendorProfilePage() {
   useContext(AuthContext);
+  const { categories } = useCategories();
   const [loading, setLoading]   = useState(true);
   const [saving, setSaving]     = useState(false);
   const [error, setError]       = useState('');
@@ -158,14 +161,7 @@ function VendorProfilePage() {
   };
 
   if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="flex flex-col items-center gap-3">
-          <div className="w-12 h-12 rounded-full border-[3px] border-primary border-t-transparent animate-spin" />
-          <p className="text-sm text-gray-400 font-medium">Loading your profile…</p>
-        </div>
-      </div>
-    );
+    return <PageLoading />;
   }
 
   return (
@@ -313,7 +309,7 @@ function VendorProfilePage() {
           accentColor="#8B5CF6"
         >
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            <SelectComponent label="Specialization" options={CATEGORIES}
+            <SelectComponent label="Specialization" options={categories}
               selectedVal={formData.category} handleChange={val => handleChange('category', val)} />
             <SelectComponent label="Service Type" options={TYPES}
               selectedVal={formData.type} handleChange={val => handleChange('type', val)} />

@@ -3,6 +3,7 @@ import { RiHome5Fill } from "react-icons/ri";
 import { IoChatbubblesSharp } from "react-icons/io5";
 import { HiClipboardDocumentCheck } from "react-icons/hi2";
 import { FaUser } from "react-icons/fa";
+import NotificationBell from "./NotificationBell";
 
 const routes = [
     { label: "home",     path: "/vendor",          icon: <RiHome5Fill /> },
@@ -57,6 +58,26 @@ function VendorNavbar() {
                         );
                     })}
                 </div>
+
+                {/* Right Actions */}
+                <div className="flex items-center gap-4">
+                    <NotificationBell />
+                </div>
+            </div>
+
+            {/* ── Mobile Top Bar ── */}
+            <div className="md:hidden flex items-center justify-between py-4 mb-4">
+                <NavLink to="/" className="flex items-center gap-2 select-none">
+                    <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white text-xs font-black"
+                        style={{ background: 'linear-gradient(135deg, #008D87 0%, #005f5b 100%)' }}>
+                        K
+                    </div>
+                    <span className="text-xl font-black tracking-tight"
+                        style={{ background: 'linear-gradient(135deg, #008D87, #005f5b)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+                        KENTO
+                    </span>
+                </NavLink>
+                <NotificationBell />
             </div>
 
             {/* ── Mobile Bottom Navigation ── */}

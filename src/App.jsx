@@ -7,7 +7,7 @@ import ClientOnboardPage from './pages/Client/ClientOnboardPage'
 import ClientHomePage from './pages/Client/ClientHomePage'
 import ClientNavbar from './components/ClientNavbar'
 import VendorProfile from './pages/Client/VendorProfile'
-import ClientChatsPage from './pages/Client/ClientChatsPage';
+import ChatsPage from './pages/Shared/ChatsPage';
 import ClientSavesPage from './pages/Client/ClientSavesPage'
 import ClientContractPage from './pages/Client/ClientContractPage'
 import ClientBookingsPage from './pages/Client/ClientBookingsPage'
@@ -20,6 +20,8 @@ import VendorProfilePage from './pages/Vendor/VendorProfilePage'
 import VendorContractPage from './pages/Vendor/VendorContractPage'
 import VendorNavbar from './components/VendorNavbar'
 import VendorPackagesPage from './pages/Vendor/VendorPackagesPage'
+import AdminLoginPage from './pages/Admin/AdminLoginPage'
+import AdminDashboard from './pages/Admin/AdminDashboard'
 
 function ClientLayout() {
   return (
@@ -32,9 +34,10 @@ function ClientLayout() {
 
 function ChatLayout() {
   return (
-    <div className='max-w-350 mx-auto md:p-6'>
-      <ClientNavbar />
-      <Outlet />
+    <div className='max-w-350 mx-auto h-[100dvh] flex flex-col md:p-4'>
+      <div className='flex-1 overflow-hidden min-h-0'>
+        <Outlet />
+      </div>
     </div>
   )
 }
@@ -50,9 +53,10 @@ function VendorLayout() {
 
 function VendorChatLayout() {
   return (
-    <div className='max-w-350 mx-auto md:p-6'>
-      <VendorNavbar />
-      <Outlet />
+    <div className='max-w-350 mx-auto h-[100dvh] flex flex-col md:p-4'>
+      <div className='flex-1 overflow-hidden min-h-0'>
+        <Outlet />
+      </div>
     </div>
   )
 }
@@ -74,7 +78,7 @@ function App() {
               <ChatLayout />
             </ProtectedRoute>
           }>
-            <Route path='' element={<ClientChatsPage />} />
+            <Route path='' element={<ChatsPage />} />
           </Route>
 
           <Route path='/' element={<ClientLayout />}>
@@ -115,8 +119,16 @@ function App() {
               <VendorChatLayout />
             </ProtectedRoute>
           }>
-            <Route path='' element={<ClientChatsPage />} />
+            <Route path='' element={<ChatsPage />} />
           </Route>
+
+          {/* Admin routes */}
+          <Route path='/admin/login' element={<AdminLoginPage />} />
+          <Route path='/admin' element={
+            <ProtectedRoute role="ADMIN">
+              <AdminDashboard />
+            </ProtectedRoute>
+          } />
         </Routes>
       </BrowserRouter >
     </>
